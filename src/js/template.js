@@ -12,7 +12,7 @@ export default instance => {
     } = instance.options;
 
     // Utils
-    const hidden = con => con ? '' : 'style="display:none" hidden';
+    const hidden = con => con ? '' : 'hidden';
     const t = str => instance._t(str);
 
     const root = _.createFromTemplate(`
@@ -20,7 +20,7 @@ export default instance => {
 
         ${useAsButton ? '' : '<button type="button" :ref="button" class="pcr-button"></button>'}
 
-        <div :ref="app" class="pcr-app ${appClass || ''}" data-theme="${theme}" ${inline ? 'style="position: unset"' : ''} aria-label="${t('ui:dialog', 'color picker dialog')}" role="window">
+        <div :ref="app" class="pcr-app ${appClass || ''}" data-theme="${theme}" aria-label="${t('ui:dialog', 'color picker dialog')}" role="window">
           <div class="pcr-selection" ${hidden(components.palette)}>
             <div :obj="preview" class="pcr-color-preview" ${hidden(components.preview)}>
               <button type="button" :ref="lastColor" class="pcr-last-color" aria-label="${t('btn:last-color')}"></button>
@@ -61,6 +61,11 @@ export default instance => {
         </div>
       </div>
     `);
+
+    root.root.querySelectorAll("[hidden]").forEach(e => e.style.display = "none");
+    if (inline) {
+        root.root.querySelector("[role=window]").style.position = "unset";
+    }
 
     const int = root.interaction;
 

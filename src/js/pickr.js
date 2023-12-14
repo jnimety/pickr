@@ -623,8 +623,9 @@ export default class Pickr {
 
             // Create new swatch HTMLElement
             const el = _.createElementFromString(
-                `<button type="button" style="--pcr-color: ${color.toRGBA().toString(0)}" aria-label="${this._t('btn:swatch')}"/>`
+                `<button type="button" aria-label="${this._t('btn:swatch')}"/>`
             );
+            el.style["--pcr-color"] = color.toRGBA().toString(0)
 
             // Append element and save swatch data
             _root.swatches.appendChild(el);
